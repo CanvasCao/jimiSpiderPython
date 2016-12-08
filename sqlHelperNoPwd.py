@@ -4,6 +4,7 @@
 import MySQLdb
 
 conn = MySQLdb.connect()
+# conn = MySQLdb.connect(host='', user='', passwd='', db='', port=, charset="")
 
 
 class sqlHelper():
@@ -45,7 +46,7 @@ class sqlHelper():
 # sqlHelper.ExecuteNonQuery("insert into jimi_radar_user (pwd,mobile,mail) values('1','2','3'),('1','2','33')")
 # res = sqlHelper.ExecuteDataTable("select * from jimi_radar_site")
 # for row in res:
-#     print row[0]
+# print row[0]
 #     print row[1]
 #     print row[2]
 #     print row[3]

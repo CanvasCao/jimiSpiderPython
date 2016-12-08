@@ -7,18 +7,18 @@ from scrabHelper import ScrabHelper
 from dateHelper import DateHelper
 from sys import argv
 
-dmId = argv[1]
-
-if dmId != '1':
-    print 'wrong'
-    quit()
+# dmId = argv[1]
+#
+# if dmId != '1':
+# print 'wrong'
+# quit()
 
 scrabJson = {"data": [{
                           "scrabId": 1,
-                          "clue": 'http://cosme.pclady.com.cn/product/1682.html'
+                          "clue": 'http://cosme.pclady.com.cn/product/29669.html'
                       }, {
                           "scrabId": 2,
-                          "clue": 'http://product.kimiss.com/product/14930/'
+                          "clue": 'http://product.kimiss.com/product/80696/'
                       }]}
 scrabArray = scrabJson['data']
 
@@ -34,13 +34,12 @@ def doSave(json):
         "insert into jimi_radar_result (scrab_id,processed_clue,scrab_result,data_time,insert_time) values('%d','%s','%s','%s','%s')" % (
             scrabId, processed_clue, scrab_result, data_time, DateHelper.getDateNowStr())
     )
-    # print rowCount
 
 
 def doScrab(json):
     # print json
     startPageNum = 1  # 可能是0
-    defaultScrabPageNum = json.get('defaultScrabPageNum') or 5
+    defaultScrabPageNum = json.get('defaultScrabPageNum') or None
     scrabId = json['scrabId']
     clue = json['clue']
 
@@ -59,7 +58,7 @@ def doScrab(json):
 
             # 如果有默认爬取页数
             if defaultScrabPageNum and startPageNum > defaultScrabPageNum:
-                print '0'
+                print '爬取超过指定页数'
                 return
 
             interface = interfaceWithoutParas % (startPageNum)
@@ -74,7 +73,8 @@ def doScrab(json):
                 for div in divs:
                     content = div.find_all('div', 'uCmt')[0].find_all('a')[0].string
                     date = div.find_all('span', 'dateTime')[0].string
-
+                    print str(startPageNum) + '-------------' + content
+                    print str(startPageNum) + '-------------' + date
                     doSave(
                         {'scrabId': scrabId,
                          'processed_clue': proId,
@@ -93,12 +93,11 @@ def doScrab(json):
 
         interfaceWithoutParas = 'http://product.kimiss.com/product/%s/%d/'
 
-
         # 第一层for循环 循环接口
         while True:
             # 如果有默认爬取页数
             if defaultScrabPageNum and startPageNum > defaultScrabPageNum:
-                print '0'
+                print '爬取超过指定页数'
                 return
 
             interface = interfaceWithoutParas % (proId, startPageNum)
@@ -134,7 +133,7 @@ for i in range(len(scrabArray)):
     doScrab(scrabId, clue)
 '''
 
-ele = scrabArray[1]
+ele = scrabArray[0]
 scrabId = ele['scrabId']
 clue = ele['clue']
 doScrab({'scrabId': scrabId,
