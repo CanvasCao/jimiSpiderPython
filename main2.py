@@ -143,4 +143,4 @@ scrabId = ele['scrabId']
 clue = ele['clue']
 doScrab({'scrabId': scrabId,
          'clue': clue,
-         'defaultScrabPageNum':1})
+         'defaultScrabPageNum': 1})
