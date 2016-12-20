@@ -47,6 +47,6 @@ class sqlHelper():
 # res = sqlHelper.ExecuteDataTable("select * from jimi_radar_site")
 # for row in res:
 # print row[0]
-#     print row[1]
-#     print row[2]
+# print row[1]
+# print row[2]
 #     print row[3]

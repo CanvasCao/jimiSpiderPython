@@ -32,7 +32,7 @@ def analysisAndSaveOnce(resultsAll, dict, fieldName):
     jsonStr = json.dumps(resultDictionary, ensure_ascii=False, encoding='UTF-8')
 
 
-    sql= "update jimi_radar_dimension_mode set %s ='%s' where id=%d" % (fieldName, jsonStr, dmId)
+    sql= "update jimi_radar_dimensionmode set %s ='%s' where id=%d" % (fieldName, jsonStr, dmId)
     insertNum = SqlHelper.ExecuteNonQuery(sql)
     print jsonStr
     print sql
@@ -40,7 +40,7 @@ def analysisAndSaveOnce(resultsAll, dict, fieldName):
 
 
 # 得到当前dm爬取了哪些网站
-scrab_json = SqlHelper.ExecuteScalar("select scrab_json from jimi_radar_dimension_mode where id=" + str(dmId))
+scrab_json = SqlHelper.ExecuteScalar("select scrab_json from jimi_radar_dimensionmode where id=" + str(dmId))
 # {"data": [{"scrabId": 1,
 # "clue": 'http://cosme.pclady.com.cn/product/29669.html'
 # }, {

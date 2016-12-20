@@ -2,6 +2,7 @@
 
 
 import pycurl
+import requests
 from bs4 import BeautifulSoup
 from StringIO import StringIO
 
@@ -14,7 +15,7 @@ class ScrabHelper():
         return soup
 
     @staticmethod
-    def getHtmlFromInterface(interfaceName,codeName):
+    def getHtmlFromInterface(interfaceName, codeName):
         buffer = StringIO()
         c = pycurl.Curl()
         c.setopt(c.URL, interfaceName)
@@ -26,10 +27,21 @@ class ScrabHelper():
         # print body gb2312 utf-8
         return body.decode(codeName, 'ignore')
 
+    @staticmethod
+    def getHTMLFromURL(url, params, codeName):
+        r = requests.post(url, data=params)
+        return r.text
+
+
     # 类方法
     @classmethod
-    def getSoupFromInterface(self, interfaceName,codeName):
-        html = self.getHtmlFromInterface(interfaceName,codeName)
+    def getSoupFromInterface(self, interfaceName, codeName):
+        html = self.getHtmlFromInterface(interfaceName, codeName)
+        return self.getSoupFromHtml(html)
+
+    @classmethod
+    def getSoupFromURL(self, url, params, codeName):
+        html = self.getHTMLFromURL(url, params, codeName)
         return self.getSoupFromHtml(html)
 
 
