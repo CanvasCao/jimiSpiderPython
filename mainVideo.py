@@ -74,7 +74,7 @@ def youkuSearch():
 
 def aiqiyiSearch():
     # m_1_bitrate 1代表按默认相关度排序
-    url = 'http://so.iqiyi.com/so/q_' + searchStrAdd + '_ctg__t_0_page_1_p_1_qc_0_rd__site_iqiyi_m_1_bitrate_'
+    url = 'http://so.iqiyi.com/so/q_' + searchStrAdd + '_ctg__t_0_page_1_p_1_qc_0_rd__site_iqiyi_m_11_bitrate_'
     soup = ScrabHelper.getSoupFromURL(url, {}, 'utf8')
     num = soup.find_all('div', 'search_content')[0].find_all('em', 'keyword')[1].string
     if u'万' in num:
