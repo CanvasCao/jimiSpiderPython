@@ -30,6 +30,7 @@ class ScrabHelper():
     @staticmethod
     def getHTMLFromURL(url, params, codeName):
         r = requests.post(url, data=params)
+        r.encoding=codeName
         return r.text
 
 

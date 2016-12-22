@@ -1,8 +1,7 @@
 # coding:utf-8
-
+import json
 import urllib
 import re
-import requests
 from sqlHelper import SqlHelper
 from scrabHelper import ScrabHelper
 from dateHelper import DateHelper
@@ -164,8 +163,41 @@ def bilibiliSearch():
     doSave('bilibili_num', num, 'bilibili_max_play', maxPlayed)
 
 
+'''
 # youkuSearch()
-aiqiyiSearch()
+# aiqiyiSearch()
 # souhuSearch()
 # qqSearch()
 # bilibiliSearch()
+'''
+
+
+def youkuRelatedVideos():
+    resArr = []
+    limit = 6
+
+    url = 'http://www.soku.com/search_video/q_' + searchStrAdd
+    soup = ScrabHelper.getSoupFromURL(url, {}, 'utf8')
+
+    # 暂时取8个
+    links = soup.find_all('div', 'sk-vlist')[0].find_all('div', 'v-link', limit=limit)
+
+    for i in range(limit):
+        vid = links[i].find('a').attrs['_log_vid']
+        title = links[i].find('a').attrs['title']
+
+        resArr.append({
+           'vid':vid,
+           'title':title
+        })
+
+    resJson={
+        'data':resArr
+    }
+
+
+    sql = "update jimi_radar_video set related_video_youku = '%s' where id=%d" % (json.dumps(resJson,ensure_ascii=False, encoding='UTF-8'), id)
+    SqlHelper.ExecuteNonQuery(sql)
+
+
+# youkuRelatedVideos()
