@@ -17,7 +17,7 @@ searchArr = searchStr.split(' ')
 searchStrAdd = '+'.join(searchArr)
 searchStr20 = '%20'.join(searchArr)
 
-count = SqlHelper.ExecuteNonQuery(
+count = SqlHelper.ExecuteScalar(
     "select count(*) from jimi_radar_video where dm_id=%d and keyword='%s'" % (dmId, searchStr))
 if count == 0:
     SqlHelper.ExecuteScalar("insert into jimi_radar_video (dm_id,keyword,ctime) values (%d,'%s','%s')" % (

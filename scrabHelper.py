@@ -1,7 +1,8 @@
 # coding:utf-8
-
+import json
 
 import pycurl
+import re
 import requests
 from bs4 import BeautifulSoup
 from StringIO import StringIO
@@ -9,6 +10,14 @@ from StringIO import StringIO
 
 class ScrabHelper():
     # 静态方法
+    @staticmethod
+    def loads_jsonp(_jsonp):
+        try:
+            return json.loads(re.match(".*?({.*}).*", _jsonp, re.S).group(1))
+        except:
+            raise ValueError('Invalid Input')
+
+
     @staticmethod
     def getSoupFromHtml(html):
         soup = BeautifulSoup(html, 'html.parser')
@@ -30,7 +39,7 @@ class ScrabHelper():
     @staticmethod
     def getHTMLFromURL(url, params, codeName):
         r = requests.post(url, data=params)
-        r.encoding=codeName
+        r.encoding = codeName
         return r.text
 
 

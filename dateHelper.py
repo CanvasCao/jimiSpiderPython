@@ -12,3 +12,8 @@ class DateHelper():
         return (datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S'))
 
 
+    @staticmethod
+    # 根据日期返回秒数
+    def getDateInt(dateStr):
+        return int(time.mktime(dateStr.timetuple()))
+
